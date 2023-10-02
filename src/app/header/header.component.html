@@ -1,0 +1,45 @@
+<div class="nav-navbar fixed-top bg-black d-flex flex-wrap align-items-center justify-content-center justify-content-md-between p-3 mb-4">
+    <div class="col-md-3 mb-2 mb-md-0">
+      <a href="/" class="d-inline-flex text-bold text-white fs-1 font-monospace text-decoration-none">
+        SLfashion
+      </a>
+    </div>
+  
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li><a routerLink="/home" class="nav-link px-4 text-white text-uppercase fs-6">Trang chủ</a></li>
+      <li><a routerLink="/product-list" class="nav-link px-4 text-white text-uppercase fs-6">product-list</a></li>
+
+      <li class="nav-item dropdown"><a routerLink="/category-product" class="nav-link dropdown-toggle px-4 text-white text-uppercase fs-6"
+          role="button" data-bs-toggle="dropdown" aria-expanded="false">sản phẩm</a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">GIÀY</a></li>
+          <li><a class="dropdown-item" href="#">ÁO</a></li>
+          <li><a class="dropdown-item" href="#">QUẦN</a></li>
+          <li><a class="dropdown-item" href="#">PHỤ KIỆN</a></li>
+          <li><a class="dropdown-item" href="#">ÁO MẶC NGOÀI</a></li>
+          <li><a class="dropdown-item" href="#">HÀNG MỚI VỀ</a></li>
+          <li><a class="dropdown-item" href="#">SẢN PHẨM BÁN CHẠY</a></li>
+        </ul>
+      </li>
+      <li><a href="#" class="nav-link px-4 text-white text-uppercase fs-6">blogs</a></li>
+    </ul>
+  
+    <div class="col-lg-3 text-end">
+      <a routerLink="/cart" class="px-4 text-white text-decoration-none fs-6">
+        <i class="bi bi-cart3">
+          <span class="px-1 card-count">{{totalCart}}</span>
+        </i>
+      </a>
+      <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown">
+        <img src="https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg" alt="mdo" width="24"
+          height="24" class="rounded-circle">
+      </a>
+      <div class="dropdown-menu user-button mt-4 bg-light" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item user-item" href="#"><i class="bi bi-person-fill"></i> Tên khách hàng</a>
+        <a class="dropdown-item user-item" href="#"><i class="bi bi-receipt-cutoff"></i> Đơn hàng của bạn</a>
+        <a class="dropdown-item user-item" href="#"><i class="bi bi-heart"></i> Sản phẩm yêu thích</a>
+        <a class="dropdown-item user-item" [routerLink]="['/login']"><i class="bi bi-box-arrow-right"></i>
+          Đăng nhập</a>
+      </div>
+    </div>
+  </div>
