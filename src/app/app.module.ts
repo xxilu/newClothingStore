@@ -16,6 +16,15 @@ import { ProductCardComponent } from './body/product-card/product-card.component
 import { ProductDetailComponent } from './body/product-detail/product-detail.component';
 import { ShoppingCartComponent } from './body/shopping-cart/shopping-cart.component';
 import { PaymentComponent } from './body/payment/payment.component';
+import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
+import { ProductsComponent } from './admin-body/products/products.component';
+import { CategoriesComponent } from './admin-body/categories/categories.component';
+import { ProductsCreateComponent } from './admin-body/products/products-create/products-create.component';
+import { ProductsEditComponent } from './admin-body/products/products-edit/products-edit.component';
+import { ProductsDeleteComponent } from './admin-body/products/products-delete/products-delete.component';
+import { CategoriesCreateComponent } from './admin-body/categories/categories-create/categories-create.component';
+import { CategoriesEditComponent } from './admin-body/categories/categories-edit/categories-edit.component';
+import { CategoriesDeleteComponent } from './admin-body/categories/categories-delete/categories-delete.component';
 
 const routes: Routes = [
   { path: 'body', component: BodyComponent },
@@ -24,9 +33,22 @@ const routes: Routes = [
   { path: 'product-detail/:id', component: ProductDetailComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'payment', component: PaymentComponent },
+  { path: 'products', component: ProductsComponent },
+  { path: 'products-create', component: ProductsCreateComponent },
+  { path: 'products-edit/:id', component: ProductsEditComponent },
+  { path: 'products-delete/:id', component: ProductsDeleteComponent },
+  { path: 'categories', component: CategoriesComponent },
+  { path: 'categories-create', component: CategoriesCreateComponent },
+  { path: 'categories-edit', component: CategoriesEditComponent },
+  { path: 'categories-delete/:id', component: CategoriesDeleteComponent },
 
 
-  
+
+
+
+
+
+
 
 ]
 
@@ -42,6 +64,15 @@ const routes: Routes = [
     ProductDetailComponent,
     ShoppingCartComponent,
     PaymentComponent,
+    AdminSidebarComponent,
+    ProductsComponent,
+    CategoriesComponent,
+    ProductsCreateComponent,
+    ProductsEditComponent,
+    ProductsDeleteComponent,
+    CategoriesCreateComponent,
+    CategoriesEditComponent,
+    CategoriesDeleteComponent,
 
   ],
   imports: [
