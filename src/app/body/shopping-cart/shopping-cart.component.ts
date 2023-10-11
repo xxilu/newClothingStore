@@ -67,7 +67,7 @@ export class ShoppingCartComponent {
         size: item.productSize,
         imgpath: item.imgPath,
         quantity: item.quantity,
-        price: item.officialPrice
+        price: this.finalPrice
       }
       this.shoppingCart.PayMent(cartitem).subscribe({
         next: (data) => {

@@ -113,14 +113,12 @@ export class ShoppingCartService {
     this.cartQuantityChanged.emit(this.getQuantity());
   }
 
-
-  // PostOrder(order: any[]) {
-  //   return this.http.post<any>('https://localhost:7079/api/Orders', order)
-  // }
-
-  // PostOrderDetails(orderDetails: any) {
-  //   return this.http.post<any>('https://localhost:7069/api/OrderDetails', orderDetails)
-  // }
+  PostOrder(order: any) {
+    return this.http.post<any>('https://localhost:7069/api/Orders', order)
+  }
+  PostOrderDetails(orderDetails: any) {
+    return this.http.post<any>('https://localhost:7069/api/OrderDetails', orderDetails)
+  }
   getOrderedProducts(): any[] {
     const orderedProducts: any[] = [];
     for (const item of this.cartItem) {

@@ -8,7 +8,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit{
+export class PaymentComponent implements OnInit {
   cartItem: CartItem[] = []
   orderIdByUser: any
   finalPrice: any
@@ -28,44 +28,48 @@ export class PaymentComponent implements OnInit{
     console.log('Giá trị nhập vào là: ' + this.diachi);
     const order = {
       userId: 1,
-      totalPrice: this.finalPrice,
-      totalQuantity: this.shoppingCartService.getQuantity(),
       orderDate: new Date(this.date).toISOString(),
+      orderSize: '',
       orderAddress: this.diachi,
-      statusOrder: 0
-    
+      totalQuantity: this.shoppingCartService.getQuantity(),
+      totalPrice: this.finalPrice,
+      orderStatus: 0
+
     }
     console.log(order)
 
-    // this.cartService.PostOrder(order).subscribe(
-    //   (response) => {
-    //     this.orderIdByUser = response.orderId
-    //     console.log("Thành công")
-    //     console.log("Day la list:" + response)
-    //     console.log(this.orderIdByUser)
-    //     // console.log(this.lstCartItems)
-    //     this.lstCartItems.forEach(item => {
-    //       const orderDetail = {
-    //             orderId: this.orderIdByUser,
-    //             productId: item.productID,
-    //             unitPrice: item.price,
-    //             quantity: item.quantity
-    //           };
-    //           console.log(orderDetail)
-          
-    //           this.cartService.PostOrderDetails(orderDetail).subscribe(
-    //             (response) => {
-    //               console.log(response)
-    //             }
-    //           )
-    //     });
-    //     }
-    // )
-    // this.cartService.checkout(order);
+    this.shoppingCartService.PostOrder(order).subscribe(
+      (response) => {
+        this.orderIdByUser = response.orderId
+        console.log("Thành công")
+        console.log("Day la list:" + response)
+        console.log(this.orderIdByUser)
+        // console.log(this.lstCartItems)
+        this.cartItem.forEach(item => {
+          const orderDetail = {
+            orderId: this.orderIdByUser,
+            productId: item.productID,
+            size: item.productSize,
+            price: this.finalPrice,
+            quantity: item.quantity
+          };
+          console.log(orderDetail)
+
+          this.shoppingCartService.PostOrderDetails(orderDetail).subscribe(
+            (response) => {
+
+              console.log(response)
+            }
+          )
+        });
+      }
+    )
+    console.log(this.cartItem)
+    // this.shoppingCartService.checkout(order);
     this.shoppingCartService.ClearCart()
     // alert(order)
-    this.router.navigate(['thanks-page'])
-  
+    this.router.navigate(['thanks'])
+
 
   }
   // onCheckOut() {

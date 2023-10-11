@@ -25,6 +25,9 @@ import { ProductsDeleteComponent } from './admin-body/products/products-delete/p
 import { CategoriesCreateComponent } from './admin-body/categories/categories-create/categories-create.component';
 import { CategoriesEditComponent } from './admin-body/categories/categories-edit/categories-edit.component';
 import { CategoriesDeleteComponent } from './admin-body/categories/categories-delete/categories-delete.component';
+import { OrdersComponent } from './admin-body/orders/orders.component';
+import { ThanksComponent } from './body/thanks/thanks.component';
+import { OrdersDetailComponent } from './admin-body/orders/orders-detail/orders-detail.component';
 
 const routes: Routes = [
   { path: 'body', component: BodyComponent },
@@ -41,9 +44,9 @@ const routes: Routes = [
   { path: 'categories-create', component: CategoriesCreateComponent },
   { path: 'categories-edit', component: CategoriesEditComponent },
   { path: 'categories-delete/:id', component: CategoriesDeleteComponent },
-
-
-
+  { path: 'orders', component: OrdersComponent },
+  { path: 'thanks', component: ThanksComponent },
+  { path: 'orders-detail/:id', component: OrdersDetailComponent },
 
 
 
@@ -73,6 +76,9 @@ const routes: Routes = [
     CategoriesCreateComponent,
     CategoriesEditComponent,
     CategoriesDeleteComponent,
+    OrdersComponent,
+    ThanksComponent,
+    OrdersDetailComponent,
 
   ],
   imports: [

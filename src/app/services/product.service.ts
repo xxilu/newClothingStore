@@ -45,4 +45,9 @@ export class ProductService {
   deleteCategoryAPI(id: number) {
     return this.http.delete('https://localhost:7069/api/Categories/' + id.toString());
   }
+
+  
+  getListProdByOrderIdAPI(id: number): any {
+    return this.http.get<any>('https://localhost:7069/api/Products/order/' + id.toString())
+}
 }

@@ -36,7 +36,6 @@ export class ProductDetailComponent implements OnInit {
         this.product = prod;
         this.updateOutOfStockStatus();
         this.onIsOutOfStock();
-        console.log(this.product.amount1)
        
       })
 
