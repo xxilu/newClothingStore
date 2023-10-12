@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FavoriteProductService } from 'src/app/services/favoriteproduct.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
@@ -23,6 +25,8 @@ export class ProductDetailComponent implements OnInit {
     , private route: ActivatedRoute
     , private router: Router
     , private shoppingCart: ShoppingCartService
+    , private authen: AuthenticationService
+    , private favoriteProd: FavoriteProductService
     , private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) { }
   ngOnInit(): void {
@@ -36,7 +40,7 @@ export class ProductDetailComponent implements OnInit {
         this.product = prod;
         this.updateOutOfStockStatus();
         this.onIsOutOfStock();
-       
+
       })
 
     })
@@ -51,17 +55,17 @@ export class ProductDetailComponent implements OnInit {
   }
   AddToCart(prod: any) {
     // var prod = this.productService.getCategoryByIDProd(prodID);
-    if(this.selectedItem == this.product.size1 && this.product.amount1 == 0 || this.selectedItem == this.product.size1 && this.countProd > this.product.amount1 || !this.selectedItem){
+    if (this.selectedItem == this.product.size1 && this.product.amount1 == 0 || this.selectedItem == this.product.size1 && this.countProd > this.product.amount1 || !this.selectedItem) {
       alert("Vui lòng chọn size hoặc chọn lại số lượng vì có thể vượt quá số lượng kho")
       return
-    }else if(this.selectedItem == this.product.size2 && this.product.amount2 == 0 || this.selectedItem == this.product.size2 && this.countProd > this.product.amount2 || !this.selectedItem){
+    } else if (this.selectedItem == this.product.size2 && this.product.amount2 == 0 || this.selectedItem == this.product.size2 && this.countProd > this.product.amount2 || !this.selectedItem) {
       alert("Vui lòng chọn size khác hoặc chọn lại số lượng vì có thể vượt quá số lượng kho")
       return
-    }else if(this.selectedItem == this.product.size3 && this.product.amount3 == 0 || this.selectedItem == this.product.size3 && this.countProd > this.product.amount3 || !this.selectedItem){
+    } else if (this.selectedItem == this.product.size3 && this.product.amount3 == 0 || this.selectedItem == this.product.size3 && this.countProd > this.product.amount3 || !this.selectedItem) {
       alert("Vui lòng chọn size khác hoặc chọn lại số lượng vì có thể vượt quá số lượng kho")
       return
     }
-      this.shoppingCart.addToCart(this.product, this.countProd, this.selectedItem)
+    this.shoppingCart.addToCart(this.product, this.countProd, this.selectedItem)
     // this.shoppingCart.AddToCart(this.product, this.countProd, this.selectedItem);
     this.router.navigate(['/shopping-cart'])
     // alert(prodID)
@@ -105,20 +109,35 @@ export class ProductDetailComponent implements OnInit {
       this.isOutOfStock = this.countProd >= this.product.amount3;
     }
   }
-  onIsOutOfStock(){
-    if(this.product.amount1 == 0 && this.product.size1){
+  onIsOutOfStock() {
+    if (this.product.amount1 == 0 && this.product.size1) {
       this.isOutOfStockDB = true;
-    }else if(this.product.amount2 == 0 && this.product.size2){
+    } else if (this.product.amount2 == 0 && this.product.size2) {
       this.isOutOfStockDB = true;
-    }else if(this.product.amount3 == 0 && this.product.size3){
+    } else if (this.product.amount3 == 0 && this.product.size3) {
       this.isOutOfStockDB = true;
+    }
+  }
+  AddToFavorite(prod: any) {
+    if (this.authen.customerLoginState) {
+      const data = {
+        productId: prod.productId,
+        userId: this.authen.getCurrentUser()
+      }
+      this.favoriteProd.addToFavorites(data).subscribe()
+      console.log(this.authen.getCurrentUser());
+      console.log(data)
+    }
+    else {
+      alert("Vui lòng đăng nhập")
+      this.router.navigate(['login'])
     }
   }
 
 
-
-
-
 }
+
+
+
 
 

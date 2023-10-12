@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -8,16 +9,29 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductCardComponent implements OnInit {
   products: any;
-  constructor(private productService: ProductService) { }
-
+  selectedCategory: any
+  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  // categoryId: any
+  cateState: any
   ngOnInit(): void {
-    this.ProductList()
+    const categoryId = Number(this.route.snapshot.paramMap.get('id'));
 
+    // this.loadList()
+    this.productService.getProductByCate(categoryId).subscribe((list) => {
+      this.cateState = true
+      this.products = list.reverse();
+      console.log('trang thai',this.cateState)
+      // this.loadList();
+    });
+    console.log(categoryId)
   }
-  ProductList() {
-    this.productService.getProductListAPI().subscribe(data => {
-      this.products = data;
-    })
-  }
+  // loadList() {
+  //   this.productService.getProductByCate(this.categoryId).subscribe((list) => {
+  //     this.cateState = true
+  //     this.products = list.reverse();
+  //     console.log('trang thai',this.cateState)
+  //     // this.loadList();
+  //   });
+  // }
 }
 

@@ -9,9 +9,14 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
   productList: any
   selectedSortOption: string = 'default';
+  categoryList:any
+  selectedItem:any
+  // dropdownData: any[] = [];
+
   constructor(private productService: ProductService) { }
   ngOnInit(): void {
-    this.productList = this.productService.getProductListAPI();
+    // this.productList = this.productService.getProductListAPI()
+    // this.categoryList = this.productList.getCategoryListAPI()
   }
   // onSortOptionChange(): void {
   //   if (this.selectedSortOption === 'lowToHigh') {

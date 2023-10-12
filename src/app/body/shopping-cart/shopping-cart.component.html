@@ -2,7 +2,8 @@
 <div class="container" style="min-height: 550px; margin-top: 9%;">
     <h2 style="margin-top: 20px; margin-bottom: 30px;">Giỏ hàng của bạn <i class="bi bi-cart3"></i></h2>
 
-    <h3>Chưa có sản phẩm nào trong giỏ hàng</h3>
+    <h3 *ngIf="cartItem.length == 0 ;else shoppingCartList">Chưa có sản phẩm nào trong giỏ hàng</h3>
+    <ng-template #shoppingCartList>
     <div class="row">
 
         <div class="col-lg-8 cart">
@@ -83,7 +84,8 @@
 
         </div>
     </div>
-
+</ng-template>
     <!-- </ng-template> -->
 </div>
+
 <!-- end-cart -->

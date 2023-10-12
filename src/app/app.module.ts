@@ -28,11 +28,17 @@ import { CategoriesDeleteComponent } from './admin-body/categories/categories-de
 import { OrdersComponent } from './admin-body/orders/orders.component';
 import { ThanksComponent } from './body/thanks/thanks.component';
 import { OrdersDetailComponent } from './admin-body/orders/orders-detail/orders-detail.component';
+import { SearchComponent } from './body/search/search.component';
+import { RegisterComponent } from './body/register/register.component';
+import { LoginComponent } from './body/login/login.component';
+import { FavoriteListComponent } from './body/favorite-list/favorite-list.component';
 
 const routes: Routes = [
   { path: 'body', component: BodyComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'product-list', component: ProductListComponent },
+  { path: 'product-list/:id', component: ProductListComponent },
+  { path: 'product-card/:id', component: ProductCardComponent },
+
   { path: 'product-detail/:id', component: ProductDetailComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'payment', component: PaymentComponent },
@@ -47,6 +53,13 @@ const routes: Routes = [
   { path: 'orders', component: OrdersComponent },
   { path: 'thanks', component: ThanksComponent },
   { path: 'orders-detail/:id', component: OrdersDetailComponent },
+
+  {path: 'search/:search_key', component: SearchComponent},
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'favorite-list', component: FavoriteListComponent },
+
+
 
 
 
@@ -79,6 +92,12 @@ const routes: Routes = [
     OrdersComponent,
     ThanksComponent,
     OrdersDetailComponent,
+
+    SearchComponent,
+    RegisterComponent,
+    LoginComponent,
+    FavoriteListComponent,
+
 
   ],
   imports: [

@@ -36,6 +36,9 @@ export class ShoppingCartComponent {
 
   }
   get cartItems() {
+    if(this.cartItem.length == 0){
+      alert("Chưa có sản phẩm nào trong giỏ hàng")
+    }
     return this.shoppingCart.getShoppingCart();
   }
   InCreaseQuantity(prodID: number) {
@@ -59,7 +62,7 @@ export class ShoppingCartComponent {
 
   onPayment() {
     console.log(this.finalPrice)
-    // if (this.authenticationService.customerLoginState) {
+    if (this.authenticationService.customerLoginState) {
       this.cartItem.forEach(item => {
       const cartitem = {
         productId: item.productID,
@@ -86,13 +89,14 @@ export class ShoppingCartComponent {
       })
       this.router.navigate(['payment'])
     }
-    // else {
-    //   this.router.navigate(['login'])
-    // }
+    else {
+      alert("Vui lòng đăng nhập")
+      this.router.navigate(['login'])
+    }
   }
 
 
 
 
 
-// }
+}

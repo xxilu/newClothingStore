@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>Your Favorite Items</h2>
+    <ul>
+        <li *ngFor="let favorite of favoriteList">
+            <div>
+                <span>{{ getProductIntroduction(favorite.productId) }}</span>
+                <span>{{ getProductOfficialPrice(favorite.productId) }}</span>
+                <span>{{ getProductName(favorite.productId) }}</span>
+            </div>
+            <button class="btn btn-danger" (click)="deleteFavoriteProduct(favorite.favoriteId)">Xóa</button>
+        </li>
+    </ul>
+</div>
