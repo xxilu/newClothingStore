@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { ProductService } from './product.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Products } from '../model/product.model';
 import { CartItem } from '../model/cart-item.model';
 
@@ -13,11 +13,16 @@ export class ShoppingCartService {
   cartQuantityChanged: EventEmitter<number> = new EventEmitter<number>();
   selectedProduct: any
   private apiUrl = 'https://localhost:7069/api/OrderDetails';
+  private cartItemCount = new BehaviorSubject<number>(0);
+  currentCartItemCount = this.cartItemCount.asObservable();
 
   constructor(private http: HttpClient) { }
   // getbla() {
   //   return this.cartItem.length
   // }
+  changeCartItemCount(count: number) {
+    this.cartItemCount.next(count);
+  }
 
   getShoppingCart(): CartItem[] {
     return this.cartItem;
@@ -56,6 +61,8 @@ export class ShoppingCartService {
     this.cartItem.forEach(element => {
       total += element.quantity;
     });
+    
+    // this.cartQuantityChanged.emit(this.getQuantity());
     return total;
   }
   availableSizes: { [key: string]: number } = {}; // Đối tượng lưu trữ số lượng kích thước có sẵn

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -10,28 +11,34 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductCardComponent implements OnInit {
   products: any;
   selectedCategory: any
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, private shoppingCart: ShoppingCartService, private route: ActivatedRoute) { }
   // categoryId: any
   cateState: any
-  ngOnInit(): void {
-    const categoryId = Number(this.route.snapshot.paramMap.get('id'));
+  addtocart: any
 
-    // this.loadList()
-    this.productService.getProductByCate(categoryId).subscribe((list) => {
-      this.cateState = true
-      this.products = list.reverse();
-      console.log('trang thai',this.cateState)
+  ngOnInit(): void {
+    this.route.params.subscribe(() => {
+      const categoryId = Number(this.route.snapshot.paramMap.get('id'));
+      if (categoryId == 0) {
+        this.loadList()
+
+      }else{
+      this.productService.getProductByCate(categoryId).subscribe((list) => {
+        this.cateState = true
+        this.products = list.reverse();
+        console.log('trang thai', this.cateState)
+        // this.loadList();
+      });
+      // console.log(categoryId)
+      // this.addtocart = this.shoppingCart.addToCart
+    }
+    })
+
+  }
+  loadList() {
+    this.productService.getProductListAPI().subscribe((list) => {
+      this.products = list;
       // this.loadList();
     });
-    console.log(categoryId)
   }
-  // loadList() {
-  //   this.productService.getProductByCate(this.categoryId).subscribe((list) => {
-  //     this.cateState = true
-  //     this.products = list.reverse();
-  //     console.log('trang thai',this.cateState)
-  //     // this.loadList();
-  //   });
-  // }
 }
-

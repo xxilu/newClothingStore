@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -9,28 +10,14 @@ import { ProductService } from 'src/app/services/product.service';
 export class ProductListComponent implements OnInit {
   productList: any
   selectedSortOption: string = 'default';
-  categoryList:any
-  selectedItem:any
+  categoryList: any
+  selectedItem: any
+  categoryID: any
   // dropdownData: any[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private route: ActivatedRoute) { }
   ngOnInit(): void {
-    // this.productList = this.productService.getProductListAPI()
-    // this.categoryList = this.productList.getCategoryListAPI()
-  }
-  // onSortOptionChange(): void {
-  //   if (this.selectedSortOption === 'lowToHigh') {
-  //     this.productList.sort((a, b) => a.price - b.price);
-  //   }
-  //   else if (this.selectedSortOption === 'HighToLow') {
-  //     this.productList.sort((a, b) => b.price - a.price);
 
-  //   } else {
-  //     this.productList.sort((a, b) => a.id - b.id);
-  //   }
-
-  // }
-
-
+}
 
 }

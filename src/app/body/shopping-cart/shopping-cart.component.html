@@ -1,91 +1,99 @@
 <!-- cart -->
-<div class="container" style="min-height: 550px; margin-top: 9%;">
-    <h2 style="margin-top: 20px; margin-bottom: 30px;">Giỏ hàng của bạn <i class="bi bi-cart3"></i></h2>
+<h3 *ngIf="cartItem.length == 0 ;else shoppingCartList">Chưa có sản phẩm nào trong giỏ hàng</h3>
+<ng-template #shoppingCartList>
+<section class="h-100 h-custom" style="padding-top: 100px">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h1 class="fw-bold mb-0 text-black">Giỏ hàng</h1>
+                                        <h6 class="mb-0 text-muted">{{quantityCart}} items</h6>
+                                    </div>
+                                    <hr class="my-4">
 
-    <h3 *ngIf="cartItem.length == 0 ;else shoppingCartList">Chưa có sản phẩm nào trong giỏ hàng</h3>
-    <ng-template #shoppingCartList>
-    <div class="row">
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center"
+                                        *ngFor="let item of cartItem">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
+                                                class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <!-- <h6 class="text-muted"></h6> -->
+                                            <h6 class="text-black mb-0">{{item.productName}} {{item.productSize}}</h6>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                            <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
 
-        <div class="col-lg-8 cart">
+                                            <input [value]="item.quantity" id="form1" min="0" name="quantity" value="1"
+                                                type="number" class="form-control form-control-sm" />
 
 
-            <div class="cart-infor">
-                <div class="row">
-                    <div class="col-lg-4 cart-title">Sản phẩm</div>
-                    <div class="col-lg-2 cart-title">Đơn giá</div>
-                    <div class="col-lg-2 cart-title">Số lượng</div>
-                    <div class="col-lg-2 cart-title">Thành tiền</div>
+                                            <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                            <h6 class="mb-0">{{item.officialPrice}} VNĐ</h6>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                                        </div>
+                                        <div class="col-lg-1 delete-item-cart-btn">
+                                            <button (click)="DeleteProduct(item.productID)"><i class="bi bi-trash"></i>Xóa</button>
+                                        </div>
+                                    </div>
 
-                </div>
-                <hr>
-                <div>
-                    <div class="row cart-items" *ngFor="let item of cartItem">
-                        <div class="col-lg-4">
-                            <a href="#" class="product-link-cart">
-                                <div class="product-infor-cart">
-                                    <!-- <img src="assets/h1.jpg" alt="" width="100px" height="100px"> -->
-                                    <div class="name-product-cart">{{ item.productName }} {{item.productSize}}</div>
+                                    <hr class="my-4">
+
+                                    <div class="pt-5">
+                                        <h6 class="mb-0"><a href="#!" class="text-body"><i
+                                                    class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                                    </div>
                                 </div>
-                            </a>
-                        </div>
+                            </div>
+                            <div class="col-lg-4 bg-grey">
+                                <div class="p-5">
+                                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                                    <hr class="my-4">
 
-                        <div class="col-lg-2">
-                            <div class="unit-price-cart">{{ item.officialPrice }}</div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="quantity quantity-cart" id="handleCounter" style="display: flex;">
-                                <!-- <button type="button" class="quantity-btn quantity-btn-cart"
-                                    (click)="DeCreaseQuantity(item.productID)">-</button> -->
-                                <!-- <input type="number" data-numspin [value]="item.quantity" id="quantity_product" min="1"
-                                    style="width: 45px;"> -->
-                                    {{item.quantity}}
-                                <!-- <button type="button" class="quantity-btn quantity-btn-cart"
-                                    (click)="InCreaseQuantity(item.productID)">+</button> -->
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <h5 class="text-uppercase">Tổng Số lượng: </h5>
+                                        <h5>{{quantityCart}}</h5>
+                                    </div>
+                                    <hr class="my-4">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">Tổng tiền: </h5>
+                                        <h5>{{finalPrice}} VNĐ</h5>
+                                    </div>
+                                    <!-- 
+                                    <button type="button" class="btn btn-dark btn-block btn-lg"
+                                        data-mdb-ripple-color="dark">Đặt hàng</button> -->
+                                    <form action="" method="post" class="form-order btn btn-dark btn-block btn-lg">
+                                        <input style="color: white;" type="submit" value="Đặt hàng"
+                                            (click)="onPayment()" class="btn order-button">
+                                    </form>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-2">
-                            <div class="into-money-cart"> {{finalPrice}}</div>
-
-                        </div>
-                        <div class="col-lg-1 delete-item-cart-btn">
-                            <button (click)="DeleteProduct(item.productID)"><i class="bi bi-trash"></i>Xóa</button>
-                        </div>
-                        <div>
-                            <!-- <button class="update-product-btn" type="submit"><i class="ri-edit-box-line"></i></button> -->
-                            <!-- <button class="delete-product-cart"><i class="ri-delete-bin-line"></i></button> -->
-                        </div>
-
                     </div>
-                    <hr>
-
-
                 </div>
-
             </div>
-        </div>
-
-
-        <div class="col-lg-4">
-            <div class="right-cart-element">
-                <div class="count-items">
-                    <span>Số lượng sản phẩm </span>
-                    <span style="float: right;">{{quantityCart}}</span>
-                </div>
-                <hr>
-                <div class="price-total">
-                    <span>Tổng tiền</span>
-                    <span class="total-price-cart">{{finalPrice | currency:'VND':'' }} ₫</span>
-                </div>
-                <form action="" method="post" class="form-order">
-                    <input type="submit" value="Đặt hàng" (click)="onPayment()" class="btn order-button">
-                </form>
-            </div>
-
         </div>
     </div>
+</section>
 </ng-template>
+<!--  -->
+
     <!-- </ng-template> -->
-</div>
+<!-- </div> -->
 
 <!-- end-cart -->

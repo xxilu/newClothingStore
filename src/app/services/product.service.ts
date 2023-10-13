@@ -37,8 +37,8 @@ export class ProductService {
   deleteProductAPI(idProduct: number) {
     return this.http.delete('https://localhost:7069/api/Products/' + idProduct.toString());
   }
-  getProductByCate(id: number): Observable<any>{
-    return this.http.get('https://localhost:7069/api/Categories/category/' + id.toString());
+  getProductByCate(id: number): Observable<[]>{
+    return this.http.get<[]>('https://localhost:7069/api/Categories/category/' + id.toString());
   }
 
 

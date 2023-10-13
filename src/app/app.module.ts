@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router'; 
+import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 
@@ -32,16 +32,22 @@ import { SearchComponent } from './body/search/search.component';
 import { RegisterComponent } from './body/register/register.component';
 import { LoginComponent } from './body/login/login.component';
 import { FavoriteListComponent } from './body/favorite-list/favorite-list.component';
+import { AuthenticationService } from './services/authentication.service';
+
 
 const routes: Routes = [
   { path: 'body', component: BodyComponent },
   { path: 'home', component: HomeComponent },
   { path: 'product-list/:id', component: ProductListComponent },
+  // { path: 'product-list', component: ProductListComponent },
+
   { path: 'product-card/:id', component: ProductCardComponent },
 
   { path: 'product-detail/:id', component: ProductDetailComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'payment', component: PaymentComponent },
+
+  { path: 'admin-sidebar', component: AdminSidebarComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products-create', component: ProductsCreateComponent },
   { path: 'products-edit/:id', component: ProductsEditComponent },
@@ -112,4 +118,7 @@ const routes: Routes = [
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor( private router: Router, private authenticationService: AuthenticationService, private route: ActivatedRoute) { }
+  
+ }

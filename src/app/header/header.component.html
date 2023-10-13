@@ -5,6 +5,9 @@
       SLfashion
     </a>
   </div>
+  <button (click)="QuantityCart()" type="button" class="btn btn-danger" aria-expanded="false">
+    cc
+  </button>
 
   <ul class="nav col-12 col-md-auto align-items-center mb-2 mb-md-0">
     <li><a routerLink="/home" class="nav-link px-4 text-white text-uppercase fs-6">Trang chủ</a></li>
@@ -19,35 +22,35 @@
         </form>
       </div>
     </li>
-    <li><a routerLink="/product-list" class="nav-link px-4 text-white text-uppercase fs-6">product-list</a></li>
-    
-    <li class="nav-item dropdown"><a routerLink="/category-product"
+    <!-- <li><a routerLink="/product-list" class="nav-link px-4 text-white text-uppercase fs-6">Tất cả sản phẩm</a></li> -->
+
+    <li class="nav-item dropdown"><a (click)="navigateToProductList(0)"
         class="nav-link dropdown-toggle px-4 text-white text-uppercase fs-6" role="button" data-bs-toggle="dropdown"
         aria-expanded="false">sản phẩm</a>
-      <ul class="dropdown-menu" *ngFor="let item of cateList">
-        <li><a class="dropdown-item" href="#"></a></li>
-        <!-- <li><a class="dropdown-item" href="#">ÁO</a></li>
-        <li><a class="dropdown-item" href="#">QUẦN</a></li>
-        <li><a class="dropdown-item" href="#">PHỤ KIỆN</a></li>
-        <li><a class="dropdown-item" href="#">ÁO MẶC NGOÀI</a></li>
-        <li><a class="dropdown-item" href="#">HÀNG MỚI VỀ</a></li>
-        <li><a class="dropdown-item" href="#">SẢN PHẨM BÁN CHẠY</a></li> -->
+      <ul class="dropdown-menu">
+        <li><a (click)="navigateToProductList(item.categoryId)" class="dropdown-item"
+            *ngFor="let item of cateList">{{item.categoryName}}</a></li>
       </ul>
     </li>
+
+    <style>
+      .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+      }
+    </style>
+
+
     <div class="btn-group">
       <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Danh mucj
+        Sản phẩm
       </button>
-      <ul class="dropdown-menu" >
-        <li><a class="dropdown-item" (click)="navigateToProductList(item.categoryId)" *ngFor="let item of cateList">{{item.categoryName}}</a></li>
-        
-        <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="navigateToProductList(item.categoryId)"
+            *ngFor="let item of cateList">{{item.categoryName}}</a></li>
       </ul>
     </div>
   </ul>
+
   <div class="col-lg-3 text-end">
     <a routerLink="/shopping-cart" class="px-4 text-white text-decoration-none fs-6">
       <i class="bi bi-cart3">
@@ -62,7 +65,7 @@
     <div class="dropdown-menu user-button mt-4 bg-light" aria-labelledby="dropdownMenuButton">
       <a class="dropdown-item user-item" href="#"><i class="bi bi-person-fill"></i> Tên khách hàng</a>
       <a class="dropdown-item user-item" href="#"><i class="bi bi-receipt-cutoff"></i> Đơn hàng của bạn</a>
-      <a class="dropdown-item user-item" [routerLink]="['/favorite-list']"><i class="bi bi-heart"></i> Sản phẩm yêu
+      <a class="dropdown-item user-item" (click)="toFavorList()"><i class="bi bi-heart"></i> Sản phẩm yêu
         thích</a>
       <a class="dropdown-item user-item" [routerLink]="['/login']"><i class="bi bi-box-arrow-right"></i>
         Đăng nhập</a>
