@@ -38,5 +38,4 @@ export class AuthenticationService {
   // GetCustomerById(idCus: number): Observable<Customer> {
   //     // return this.http.get<Customer>('https://localhost:7277/api/Customers/' + idCus.toString());
   // }
-
 }

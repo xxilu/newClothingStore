@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
   cateList: any
   categoryId: any
   cateState: boolean = false
+  adminState: boolean = false
   cartItem: CartItem[] = []
   totalCart = 0
 
@@ -36,6 +37,9 @@ export class HeaderComponent implements OnInit {
     })
     this.authenticationService.customerStated.subscribe((event) => {
       this.customerState = event
+    })
+    this.authenticationService.adminStated.subscribe((event) => {
+      this.adminState = event
     })
     this.productService.getCategoryListAPI().subscribe((categories) => {
       this.cateList = categories;

@@ -1,8 +1,13 @@
-<app-header></app-header>
-<!--  -->
-<!-- <router-outlet></router-outlet> -->
-<app-admin-sidebar></app-admin-sidebar>
+<div *ngIf="adminLogin else notAdmin">
+    <app-admin-sidebar></app-admin-sidebar>
+</div>
 
-<!--  -->
-<app-footer></app-footer>
+<ng-template #notAdmin>
+    <app-header></app-header>
 
+
+    <router-outlet></router-outlet>
+    <!-- <app-body></app-body> -->
+
+    <app-footer></app-footer>
+</ng-template>

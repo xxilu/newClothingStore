@@ -27,11 +27,11 @@ export class LoginComponent implements OnInit {
     this.authenticationService.Login(customer).subscribe(
       (response) => {
         if (response.message == 'Admin Status Success!') {
-          this.router.navigate(['admin-sidebar'])
+          this.router.navigate(['products'])
           this.name = response.userName;
           this.authenticationService.customerInfo = response;
-          this.authenticationService.customerLoginState = true;
-          this.authenticationService.customerStated.emit(this.authenticationService.customerLoginState);
+          this.authenticationService.adminLoginState = true;
+          this.authenticationService.adminStated.emit(this.authenticationService.adminLoginState);
           this.authenticationService.userLogin = this.name;
           this.authenticationService.userLoginEmitter.emit(this.authenticationService.userLogin);
         } else {

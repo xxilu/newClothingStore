@@ -66,12 +66,6 @@ const routes: Routes = [
   { path: 'favorite-list', component: FavoriteListComponent },
 
 
-
-
-
-
-
-
 ]
 
 @NgModule({
@@ -119,6 +113,5 @@ const routes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor( private router: Router, private authenticationService: AuthenticationService, private route: ActivatedRoute) { }
   
  }
