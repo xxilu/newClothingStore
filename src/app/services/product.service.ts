@@ -10,8 +10,32 @@ import { Products } from '../model/product.model';
 export class ProductService {
   private apiUrl = 'https://localhost:7069/api/products';
   private selectedCategory: any
+  // products: any
 
   constructor(private http: HttpClient) { }
+  // updateQuantityDB(productId: any, selectSize: any, quantity: any) {
+  //   const product = this.getProductIdAPI(productId); 
+  //   if (productId == product.productId) {
+  //     if (selectSize == "S")
+  //     {
+  //       product.amount1 -= quantity;
+  //       console.log(quantity)
+  //     }else if(selectSize == "M"){
+  //       product.amount2 -= quantity;
+  //       console.log(quantity)
+
+  //     }else if(selectSize == "L"){
+  //       product.amount2 -= quantity;
+  //       console.log(quantity)
+
+  //     }
+  //   }
+  // }
+  updateProduct(product: any): Observable<any> {
+    return this.http.put<any>('https://localhost:7069/api/Products/' + product.productId.toString(), product);
+  }
+
+
   setSelectedCategory(categoryId: number) {
     this.selectedCategory = categoryId;
   }
@@ -20,7 +44,7 @@ export class ProductService {
     return this.selectedCategory;
   }
 
-  
+
   getProductListAPI(): Observable<any> {
     return this.http.get<any>('https://localhost:7069/api/Products');
 
@@ -37,7 +61,7 @@ export class ProductService {
   deleteProductAPI(idProduct: number) {
     return this.http.delete('https://localhost:7069/api/Products/' + idProduct.toString());
   }
-  getProductByCate(id: number): Observable<[]>{
+  getProductByCate(id: number): Observable<[]> {
     return this.http.get<[]>('https://localhost:7069/api/Categories/category/' + id.toString());
   }
 

@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { Customer } from '../model/customer.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements OnInit{
   constructor(private http: HttpClient) { }
   customerLoginState: boolean = false//thử
   adminLoginState: boolean = false
@@ -15,6 +16,13 @@ export class AuthenticationService {
   customerStated: EventEmitter<boolean> = new EventEmitter<boolean>()
   adminStated: EventEmitter<boolean> = new EventEmitter<boolean>()
 
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  
+  getCustomerListAPI(): Observable<any> {
+    return this.http.get<any>('https://localhost:7069/api/Customers');
+  }
 
   LogOut() {
     this.adminLoginState = false

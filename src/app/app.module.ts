@@ -33,13 +33,15 @@ import { RegisterComponent } from './body/register/register.component';
 import { LoginComponent } from './body/login/login.component';
 import { FavoriteListComponent } from './body/favorite-list/favorite-list.component';
 import { AuthenticationService } from './services/authentication.service';
+import { ReportComponent } from './admin-body/report/report.component';
+import { ProductSortComponent } from './body/product-sort/product-sort.component';
 
 
 const routes: Routes = [
   { path: 'body', component: BodyComponent },
   { path: 'home', component: HomeComponent },
   { path: 'product-list/:id', component: ProductListComponent },
-  // { path: 'product-list', component: ProductListComponent },
+  { path: 'product-list', component: ProductListComponent },
 
   { path: 'product-card/:id', component: ProductCardComponent },
 
@@ -48,6 +50,7 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
 
   { path: 'admin-sidebar', component: AdminSidebarComponent },
+  { path: 'report', component: ReportComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'products-create', component: ProductsCreateComponent },
   { path: 'products-edit/:id', component: ProductsEditComponent },
@@ -97,6 +100,8 @@ const routes: Routes = [
     RegisterComponent,
     LoginComponent,
     FavoriteListComponent,
+    ReportComponent,
+    ProductSortComponent,
 
 
   ],

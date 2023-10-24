@@ -1,3 +1,21 @@
+<div class="row">
+    <div class="block-filter">
+        <div class="filter-content">
+            <label class="btn">Mức giá</label>
+            <!-- <button type="button" [routerLink]="['/product-list']"   (click)=" FillProdUnder4Million()" class="btn">Dưới 4 triệu</button> -->
+            <!-- <button type="button" (click)=" FillProdFrom4To8Million()" class="btn">Từ 4 triệu đến 8 triệu</button>
+            <button type="button" (click)="FillProdFrom8To11Million()" class="btn">Từ 8 triệu đến 11 triệu</button>
+            <button type="button" (click)="FillProdOver12Million()" class="btn">Trên 12 triệu</button> -->
+        </div>
+
+        <div class="filter-content">
+            <label class="btn"> Sắp xếp theo</label>
+            <button type="button" (click)="SortIncreaseByPrice()" class="btn"><i class="bi bi-sort-down-alt"></i> Giá thấp - cao</button>
+            <button type="button" (click)="SortDecreaseByPrice()" class="btn"><i class="bi bi-sort-up"></i> Giá cao - thấp</button>
+
+        </div>
+    </div>
+</div>
 <div class="row" >
     <div class="col-lg-4 col-md-6 col-sm-6 d-flex" *ngFor="let prod of products">
         <div class="card w-100 my-2 shadow-2-strong">

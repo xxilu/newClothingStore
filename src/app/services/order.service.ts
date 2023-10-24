@@ -11,6 +11,10 @@ export class OrderService {
   lstOrder: Order[] = []
   // lstCustomer: Customer[] = []
   constructor(private http: HttpClient) { }
+  // getOrderIds(): Observable<string[]> {
+  //   return this.http.get<string[]>(`${this.apiUrl}/orders`);
+  // }
+
 
   getOrderListAPI(): Observable<Order[]> {
     return this.http.get<Order[]>('https://localhost:7069/api/Orders')
@@ -29,6 +33,14 @@ export class OrderService {
   }
   putOrderCancelAPI(id: number): any{
     return this.http.put('https://localhost:7069/api/Orders/cancel/' + id.toString(), null);
+  }
+
+
+  getOrderDetailListAPI(): Observable<OrderDetail[]> {
+    return this.http.get<OrderDetail[]>('https://localhost:7069/api/OrderDetails')
+  }
+  getOrdersByDateRange(startDate: string, endDate: string) {
+    return this.http.get(`https://localhost:7069/api/Orders/getDate?startDate=${startDate}&endDate=${endDate}`);
   }
 
   // putCategoryAPI(id: number, data: any) {

@@ -1,8 +1,16 @@
 <h2>Danh sách đơn hàng</h2>
+<input type="date" [(ngModel)]="startDate">
+<input type="date" [(ngModel)]="endDate">
+<button (click)="getOrdersByDateRange()">Lấy danh sách đơn hàng</button>
 
-<p>
-    <a class="btn btn-success" routerLink="/products-create">Thêm sản phẩm</a>
-</p>
+<!-- <div *ngIf="orders">
+  <h2>Danh sách đơn hàng trong khoảng thời gian đã chọn:</h2>
+  <ul>
+    <li *ngFor="let order of orders">
+    </li>
+  </ul>
+</div> -->
+
 <div >
     <div>
         <div>

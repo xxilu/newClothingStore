@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CartItem } from 'src/app/model/cart-item.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,7 +10,7 @@ import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent {
+export class ShoppingCartComponent implements OnInit {
 
   cartItem: CartItem[] = [];
   order: any
@@ -20,7 +20,7 @@ export class ShoppingCartComponent {
   selectedSize: string = ''
   orderedProducts: any[] = []; // Mảng chứa thông tin đặt hàng của các sản phẩm và kích thước
   products: any
-  productID: any
+  productIDD: any
 
   constructor(
     private shoppingCart: ShoppingCartService
@@ -32,20 +32,27 @@ export class ShoppingCartComponent {
   ) { }
   ngOnInit(): void {
     // this.route.params.subscribe((params: Params) => {
-    //   this.productID = Number(this.route.snapshot.paramMap.get('id'));
+    // this.productIDD = Number(this.route.snapshot.paramMap.get('id'));
     // this.category = "this.productService.getCategoryByIDProd(this.productID)";
 
-    // this.products = this.product.getProductIdAPI(this.productID);
+    // this.products = this.product.getProductIdAPI(this.productIDD);
 
     // this.product.getProductIdAPI(this.productID).subscribe((prod: number) => {
     //   this.products = prod
     // })
 
     // })
+    // this.product.getProductListAPI().subscribe((data: any) => {
+    //   this.products = data; // Gán dữ liệu nhận được từ API vào biến products
+    // });
+    // this.products = this.product.getProductListAPI();
+
     this.quantityCart = this.shoppingCart.getQuantity();
     this.finalPrice = this.shoppingCart.getPrice();
     this.cartItem = this.shoppingCart.cartItem;
     this.products = this.product.getProductIdAPI
+    // this.products = this.product.getProductListAPI
+
     // this.orderedProducts = this.shoppingCart.getOrderedProducts();
 
   }
@@ -77,6 +84,8 @@ export class ShoppingCartComponent {
   onPayment() {
     // console.log(this.finalPrice)
     if (this.authenticationService.customerLoginState) {
+      // const updateRequests: any[] = [];
+      const updateRequests: Promise<any>[] = [];
 
       this.cartItem.forEach(item => {
         const cartitem = {
@@ -87,55 +96,45 @@ export class ShoppingCartComponent {
           quantity: item.quantity,
           price: this.finalPrice
         }
-        if (item.productID) {
-          if (item.productSize === "S") {
-            this.products.amount1 -= item.quantity;
-          } 
-          else if (item.productSize === "M") {
-            this.products.amount2 -= item.quantity;
+        // const updateRequest = new Promise((resolve, reject) => {
+          this.product.getProductIdAPI(item.productID).subscribe((productDetail: { productId: number; amount1: number; amount2: number; amount3: number; }) => {
+            if (item.productID === productDetail.productId) {
+              if (item.productSize === "S") {
+                productDetail.amount1 -= item.quantity;
 
-          }
+              } if (item.productSize === "M") {
+                productDetail.amount2 -= item.quantity;
 
-        }
-        // if (item.productID == this.products.productId && item.productSize == "M") {
-        //   this.products.amount2 -= item.quantity;
+              } if (item.productSize === "L") {
+                productDetail.amount3 -= item.quantity;
 
-        // }
-        console.log(cartitem)
-        console.log(item.productID)
-        console.log(item.productSize)
-        console.log(item.quantity)
-        // console.log(this.products.amount2)
-        // if (item.productID == this.products.productID && 
-        //       (item.productSize == "S" || item.productSize == "M" || item.productSize == "L")) {
-        //       if (item.productSize == "S") {
-        //         this.products.amount1 -= item.quantity;
-        //       } else if (item.productSize == "M") {
-        //         this.products.amount2 -= item.quantity;
-        //       } else if (item.productSize == "L") {
-        //         this.products.amount3 -= item.quantity;
-        //       }
-
-
+              }
+              this.product.updateProduct(productDetail).subscribe({
+                next: (data) => {
+                  console.log('Đã cập nhật thông tin sản phẩm sau khi trừ số lượng', data);
+                }
+                , error: (error) => {
+                  console.error('Lỗi khi cập nhật thông tin sản phẩm', error);
+                }, complete: () => {
+                  // Xử lý khi hoàn thành ở đây (tùy chọn)
+                  // console.log('Hoàn thành.');
+                }
+              });
+              // this.product.updateProduct(productDetail).subscribe({
+              //   next: (data) => {
+              //     resolve(data);
+              //   },
+              //   error: (error) => {
+              //     reject(error);
+              //   }
+              // });
+            }
+          })
+        // })
+        // updateRequests.push(updateRequest);
         this.shoppingCart.PayMent(cartitem).subscribe({
           next: (data) => {
-
-            // this.cartItem.forEach(element => {
-            //   if (data.productID == element.productID && 
-            //     (data.productSize == "S" || data.productSize == "M" || data.productSize == "L")) {
-            //     if (element.productSize == "S") {
-            //       this.products.amount1 -= data.quantity;
-            //     } else if (element.productSize == "M") {
-            //       this.products.amount2 -= data.quantity;
-            //     } else if (element.productSize == "L") {
-            //       this.products.amount3 -= data.quantity;
-            //     }
-            //     console.log(data);
-            //   }
-            // });
             console.log('Đặt hàng thành công', data);
-
-
           },
           error: (error) => {
             // Xử lý lỗi ở đây
@@ -145,18 +144,24 @@ export class ShoppingCartComponent {
             // Xử lý khi hoàn thành ở đây (tùy chọn)
             console.log('Hoàn thành.');
           }
+
         });
+        // Promise.all(updateRequests)
+        //   .then(updatedProducts => {
+        //     console.log('Đã cập nhật thông tin sản phẩm sau khi trừ số lượng', updatedProducts);
+        //     // Thực hiện logic đặt hàng và chuyển hướng tại đây sau khi tất cả các sản phẩm đã được cập nhật thành công
+        //   })
+        //   .catch(error => {
+        //     console.error('Lỗi khi cập nhật thông tin sản phẩm', error);
+        //   });
+
       })
       // this.router.navigate(['payment'])
     }
     else {
-      alert("Vui lòng đăng nhập")
+      // alert("Vui lòng đăng nhập")
       this.router.navigate(['login'])
     }
   }
-
-
-
-
 
 }
