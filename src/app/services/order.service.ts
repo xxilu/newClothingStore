@@ -9,6 +9,8 @@ import { OrderDetail } from '../model/orderdetail.model';
 })
 export class OrderService {
   lstOrder: Order[] = []
+  private apiUrl = 'https://localhost:7069/api/Orders';
+
   // lstCustomer: Customer[] = []
   constructor(private http: HttpClient) { }
   // getOrderIds(): Observable<string[]> {
@@ -43,9 +45,17 @@ export class OrderService {
     return this.http.get(`https://localhost:7069/api/Orders/getDate?startDate=${startDate}&endDate=${endDate}`);
   }
 
+  getProductStatistics(): Observable<any> {
+    return this.http.get('https://localhost:7069/api/Orders/product-statistics');
+  }
+  getSalesDate(startDate: string, endDate: string) {
+    return this.http.get(`https://localhost:7069/api/Orders/sales?startDate=${startDate}&endDate=${endDate}`);
+
+  }
   // putCategoryAPI(id: number, data: any) {
   //   return this.http.put('https://localhost:7069/api/Categories/' + id.toString(), data);
   // }
+
   
 
 }

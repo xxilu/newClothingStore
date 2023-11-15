@@ -34,7 +34,13 @@ export class LoginComponent implements OnInit {
           this.authenticationService.adminStated.emit(this.authenticationService.adminLoginState);
           this.authenticationService.userLogin = this.name;
           this.authenticationService.userLoginEmitter.emit(this.authenticationService.userLogin);
-        } else {
+          console.log('bla',response)
+        } else if(response.message == "Mat khau khong dung"){
+          console.log('bla1',response)
+
+          alert('saimk')
+        }
+        else {
           this.router.navigate(['home'])
           this.name = response.userName;
           this.authenticationService.customerInfo = response;
@@ -43,10 +49,22 @@ export class LoginComponent implements OnInit {
           this.authenticationService.userLogin = this.name;
           this.authenticationService.userLoginEmitter.emit(this.authenticationService.userLogin);
           console.log(this.authenticationService.customerLoginState)
+          console.log(response)
+        }
+        
+      },
+      (error) => {
+        // Xử lý khi đăng nhập không thành công
+        if (error.error.message === 'Mat khau khong dung') {
+          this.errorMessage = 'Mật khẩu không đúng.';
+          alert("saimk")
+        } else {
+          console.error('Đăng nhập không thành công.', error);
         }
       }
+
     )
-  
+
   }
 
 }

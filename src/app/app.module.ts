@@ -35,6 +35,8 @@ import { FavoriteListComponent } from './body/favorite-list/favorite-list.compon
 import { AuthenticationService } from './services/authentication.service';
 import { ReportComponent } from './admin-body/report/report.component';
 import { ProductSortComponent } from './body/product-sort/product-sort.component';
+import { SearchAdminComponent } from './admin-body/search-admin/search-admin.component';
+// import { CommentComponent } from './body/comment/comment.component';
 
 
 const routes: Routes = [
@@ -46,6 +48,9 @@ const routes: Routes = [
   { path: 'product-card/:id', component: ProductCardComponent },
 
   { path: 'product-detail/:id', component: ProductDetailComponent },
+  // { path: 'comment', component: CommentComponent },
+
+
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'payment', component: PaymentComponent },
 
@@ -64,6 +69,8 @@ const routes: Routes = [
   { path: 'orders-detail/:id', component: OrdersDetailComponent },
 
   {path: 'search/:search_key', component: SearchComponent},
+  {path: 'searchAdmin/:search_key', component: SearchAdminComponent},
+
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'favorite-list', component: FavoriteListComponent },
@@ -102,6 +109,8 @@ const routes: Routes = [
     FavoriteListComponent,
     ReportComponent,
     ProductSortComponent,
+    SearchAdminComponent,
+    // CommentComponent,
 
 
   ],

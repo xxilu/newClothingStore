@@ -21,6 +21,7 @@ export class ShoppingCartComponent implements OnInit {
   orderedProducts: any[] = []; // Mảng chứa thông tin đặt hàng của các sản phẩm và kích thước
   products: any
   productIDD: any
+  priceItem: any
 
   constructor(
     private shoppingCart: ShoppingCartService
@@ -62,31 +63,28 @@ export class ShoppingCartComponent implements OnInit {
     }
     return this.shoppingCart.getShoppingCart();
   }
-  InCreaseQuantity(prodID: number) {
-    this.shoppingCart.PlusQuantity(prodID);
+  InCreaseQuantity(prodID: number, size: string) {
+    this.shoppingCart.PlusQuantity(prodID, size);
     this.quantityCart = this.shoppingCart.getQuantity();
-    // this.finalPrice = this.shoppingCart.GetFinalPrice();
+    this.finalPrice = this.shoppingCart.getPrice();
   }
-  DeCreaseQuantity(prodID: number) {
-    this.shoppingCart.MinusQuantity(prodID);
+  DeCreaseQuantity(prodID: number, size: string) {
+    this.shoppingCart.MinusQuantity(prodID, size);
     this.quantityCart = this.shoppingCart.getQuantity();
-    // this.finalPrice = this.shoppingCart.GetFinalPrice();
+    this.finalPrice = this.shoppingCart.getPrice();
   }
 
-  DeleteProduct(prodID: number) {
-    this.shoppingCart.DeleteProdCart(prodID);
+  DeleteProduct(prodID: number, size: string) {
+    this.shoppingCart.DeleteProdCart(prodID, size);
     this.cartItem = this.shoppingCart.cartItem;
     this.quantityCart = this.shoppingCart.getQuantity();
-    // this.finalPrice = this.shoppingCart.GetFinalPrice();
+    this.finalPrice = this.shoppingCart.getPrice();
   }
   //chỗ này giảm số lượng size trong db
 
   onPayment() {
     // console.log(this.finalPrice)
-    if (this.authenticationService.customerLoginState) {
-      // const updateRequests: any[] = [];
-      const updateRequests: Promise<any>[] = [];
-
+    if (this.authenticationService.customerLoginState) {    
       this.cartItem.forEach(item => {
         const cartitem = {
           productId: item.productID,
@@ -94,69 +92,64 @@ export class ShoppingCartComponent implements OnInit {
           size: item.productSize,
           imgpath: item.imgPath,
           quantity: item.quantity,
-          price: this.finalPrice
+          price: item.officialPrice * item.quantity
         }
-        // const updateRequest = new Promise((resolve, reject) => {
-          this.product.getProductIdAPI(item.productID).subscribe((productDetail: { productId: number; amount1: number; amount2: number; amount3: number; }) => {
-            if (item.productID === productDetail.productId) {
-              if (item.productSize === "S") {
-                productDetail.amount1 -= item.quantity;
-
-              } if (item.productSize === "M") {
-                productDetail.amount2 -= item.quantity;
-
-              } if (item.productSize === "L") {
-                productDetail.amount3 -= item.quantity;
-
-              }
-              this.product.updateProduct(productDetail).subscribe({
-                next: (data) => {
-                  console.log('Đã cập nhật thông tin sản phẩm sau khi trừ số lượng', data);
-                }
-                , error: (error) => {
-                  console.error('Lỗi khi cập nhật thông tin sản phẩm', error);
-                }, complete: () => {
-                  // Xử lý khi hoàn thành ở đây (tùy chọn)
-                  // console.log('Hoàn thành.');
-                }
-              });
-              // this.product.updateProduct(productDetail).subscribe({
-              //   next: (data) => {
-              //     resolve(data);
-              //   },
-              //   error: (error) => {
-              //     reject(error);
-              //   }
-              // });
-            }
-          })
-        // })
-        // updateRequests.push(updateRequest);
-        this.shoppingCart.PayMent(cartitem).subscribe({
-          next: (data) => {
-            console.log('Đặt hàng thành công', data);
+        this.product.reduceAmount(item.productID, item.productSize, item.quantity).subscribe(
+          response => {
+            console.log('Số lượng sản phẩm đã được giảm.');
+            // Thực hiện xử lý sau khi giảm số lượng sản phẩm thành công
           },
-          error: (error) => {
-            // Xử lý lỗi ở đây
-            console.error('Lỗi khi đặt hàng', error);
-          },
-          complete: () => {
-            // Xử lý khi hoàn thành ở đây (tùy chọn)
-            console.log('Hoàn thành.');
+          error => {
+            console.error('Lỗi khi giảm số lượng sản phẩm: ', error);
+            // Xử lý lỗi nếu có
           }
+        )
+        // const updateRequest = new Promise((resolve, reject) => {
+          // this.product.getProductIdAPI(item.productID).subscribe((productDetail: { productId: number; amount1: number; amount2: number; amount3: number; }) => {
+          //   if (item.productID === productDetail.productId) {
+          //     if (item.productSize === "S") {
+          //       productDetail.amount1 -= item.quantity;
 
-        });
-        // Promise.all(updateRequests)
-        //   .then(updatedProducts => {
-        //     console.log('Đã cập nhật thông tin sản phẩm sau khi trừ số lượng', updatedProducts);
-        //     // Thực hiện logic đặt hàng và chuyển hướng tại đây sau khi tất cả các sản phẩm đã được cập nhật thành công
-        //   })
-        //   .catch(error => {
-        //     console.error('Lỗi khi cập nhật thông tin sản phẩm', error);
-        //   });
+          //     } if (item.productSize === "M") {
+          //       productDetail.amount2 -= item.quantity;
 
+          //     } if (item.productSize === "L") {
+          //       productDetail.amount3 -= item.quantity;
+
+          //     }
+          //     this.product.updateProduct(productDetail).subscribe({
+          //       next: (data) => {
+          //         console.log('Đã cập nhật thông tin sản phẩm sau khi trừ số lượng', data);
+          //       }
+          //       , error: (error) => {
+          //         console.error('Lỗi khi cập nhật thông tin sản phẩm', error);
+          //       }, complete: () => {
+          //         console.log('Hoàn thành.');
+          //       }
+          //     });
+           
+          //   }
+          // })
+        // })
+
+        // this.shoppingCart.PayMent(cartitem, item.quantity, item.productSize).subscribe({
+        //   next: (data: any) => {
+        //     console.log('Đặt hàng thành công', data);
+        //   },
+        //   error: (error: any) => {
+        //     // Xử lý lỗi ở đây
+        //     console.error('Lỗi khi đặt hàng', error);
+        //   },
+        //   complete: () => {
+        //     // Xử lý khi hoàn thành ở đây (tùy chọn)
+        //     console.log('Hoàn thành.');
+        //   }
+
+        // });
+      
       })
-      // this.router.navigate(['payment'])
+      this.shoppingCart.cartItem = this.cartItem;
+      this.router.navigate(['payment'])
     }
     else {
       // alert("Vui lòng đăng nhập")

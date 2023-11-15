@@ -1,5 +1,13 @@
 <h2>Danh sách sản phẩm</h2>
-
+<div class="search">
+    <form id="searchFormTop" (ngSubmit)="SearchSubmit(f)" #f="ngForm">
+      <input type="text" ngModel name="search_string" type="search" class="searchbox" placeholder="Search..."
+        aria-label="Search">>
+      <span class="search-btn-wrap">
+        <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+      </span>
+    </form>
+  </div>
 <p>
     <a class="btn btn-success" routerLink="/products-create">Thêm sản phẩm</a>
 </p>

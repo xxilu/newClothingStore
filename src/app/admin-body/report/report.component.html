@@ -40,6 +40,24 @@
         <p class="card-text">{{item.productId}}</p>
     </div>
 </div>
+<!-- <div *ngFor="let stat of productStatistics">
+    <p>Product ID: {{ stat.productId }} - Product Name: {{ stat.productName }} - Total Price: {{ stat.totalPrice }}, Total Quantity: {{ stat.totalQuantity }}</p>
+  </div> -->
+  <h2>Danh sách đơn hàng</h2>
+<input type="date" [(ngModel)]="startDate">
+<input type="date" [(ngModel)]="endDate">
+<button (click)="getSalesDate()">Lấy danh sách đơn hàng</button>
+<div *ngFor="let item of productStatistics">
+    <div class="row" style="align-items: center;" >
+        <div class="col-lg-2">{{item.productId}}</div>
+        <div class="col-lg-3">{{item.productName}}</div>
+        <div class="col-lg-1">{{item.totalPrice}}</div>
+        <div class="col-lg-1">{{item.totalQuantity}}</div>
+        
+    </div>
+    <hr>
+</div>
+  
 
 
 

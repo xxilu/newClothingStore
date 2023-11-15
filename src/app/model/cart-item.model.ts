@@ -22,8 +22,6 @@ export class CartItem{
         this.imgPath = prod.imgPath1;
         this.quantity = quantity;
         this.officialPrice = prod.officialPrice;     
-
-
     }
 
     public FinalPrice():number{        

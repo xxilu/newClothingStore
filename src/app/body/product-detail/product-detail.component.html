@@ -43,8 +43,8 @@
                 <h5 class="price-details-product">{{product.price}} ₫ </h5>
             </div>
             <!-- <div class="status-product" *ngIf="isOutOfStock" > -->
-                <!-- <i class="bi bi-bag-check"></i> -->
-                <!-- <h3>Hết hàng</h3> -->
+            <!-- <i class="bi bi-bag-check"></i> -->
+            <!-- <h3>Hết hàng</h3> -->
             <!-- </div> -->
 
             <!-- nếu hết hàng -->
@@ -55,22 +55,23 @@
                 </div>
             </ng-template> -->
             <!-- chọn size  -->
-          
-              
+
+
             <ul style="display: flex; list-style-type: none;">
                 <li (click)="onListItemClick(product.size1)" [value]="product.size1" role="button">{{ product.size1 }}
                     <span *ngIf="product.amount1 === 0">Hết hàng</span>
                 </li>
-                <li (click)="onListItemClick(product.size2)" style="margin-left: 20px; margin-right: 20px;" [value]="product.size2" role="button">{{ product.size2 }}
+                <li (click)="onListItemClick(product.size2)" style="margin-left: 20px; margin-right: 20px;"
+                    [value]="product.size2" role="button">{{ product.size2 }}
                     <span *ngIf="product.amount2 === 0">Hết hàng</span>
                 </li>
                 <li (click)="onListItemClick(product.size3)" [value]="product.size3" role="button">{{ product.size3 }}
                     <span *ngIf="product.amount3 === 0">Hết hàng</span>
 
                 </li>
-              </ul>
+            </ul>
 
-              <!-- <ul>
+            <!-- <ul>
                 <li>
                   <label>
                     <input type="radio" name="product" [value]="product.size1" [(ngModel)]="product.size1">{{product.size1}}
@@ -87,11 +88,11 @@
                   </label>
                 </li>
               </ul> -->
-              
-              
-                
-        
-       
+
+
+
+
+
             <!-- <select [(ngModel)]="product">
                 <option value="default">Chọn 1 một tùy chọn</option>
                 <option [value]="product.size1">S</option>
@@ -100,14 +101,16 @@
 
 
             </select>  -->
-            
+
 
 
             <div class="quantity" id="handleCounter" *ngIf="product">
                 <span style="margin-right: 20px;">Số lượng</span>
-                <button  [disabled]="isLimitReached" type="button" class="btn quantity-btn" id="counter-minus" (click)="CounterMinus()">-</button>
+                <button [disabled]="isLimitReached" type="button" class="btn quantity-btn" id="counter-minus"
+                    (click)="CounterMinus()">-</button>
                 <input type="number" data-numspin [value]="countProd" id="quantity_product" min="1" disabled="disabled">
-                <button  [disabled]="isOutOfStock || isLimitReached" type="button" class="btn quantity-btn" id="counter-plus" (click)="CounterPlus()">+</button>
+                <button [disabled]="isOutOfStock || isLimitReached" type="button" class="btn quantity-btn"
+                    id="counter-plus" (click)="CounterPlus()">+</button>
             </div>
 
 
@@ -121,13 +124,33 @@
             </ng-template> -->
 
             <!-- yêu thích -->
-            <button class="love-product-btn" (click)="AddToFavorite(product)"><i class="bi bi-heart-fill"></i>yêu thích</button>
+            <button class="love-product-btn" (click)="AddToFavorite(product)"><i class="bi bi-heart-fill"></i>yêu
+                thích</button>
         </div>
     </div>
 
 
 </div>
 <!-- <app-new-prod-list></app-new-prod-list> -->
+<div *ngFor="let comment of comments; let i = index">
+    <!-- <h3>{{ comment.title }}</h3> -->
+    <p>{{ users[i]?.userName }} {{ comment.content }} </p>
+    <!-- <p>User: </p>  -->
+    <!-- <p></p> -->
+
+  </div>
+ 
+<form #f="ngForm">
+    <!-- <input type="text" ngModel name="ProductName" placeholder="Tên sản phẩm" class="form-control"
+        style="height: 40px; padding-left: 5px;" /><br> -->
+
+    <label for="comment">Leave a comment:</label><br>
+
+    <textarea id="comment" ngModel name="content" rows="4" cols="50"></textarea><br><br>
+    <button (click)="onSubmit(f)" type="submit" class="btn btn-success"
+        style="width:100%;margin-top: 20px; height: 35px;">Lưu</button>
+    <!-- <button type="submit">Submit</button> -->
+</form>
 
 
 

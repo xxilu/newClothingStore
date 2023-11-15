@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FavoriteProductService } from 'src/app/services/favoriteproduct.service';
@@ -14,12 +15,19 @@ export class ProductDetailComponent implements OnInit {
   productID: number = 0;
   product: any;
   category: any;
+  clientName: any;
   countProd: number = 1;
 
   selectedItem: string = '';
   isOutOfStock: boolean = false;
   isLimitReached: boolean = false;
   isOutOfStockDB: boolean = false;
+
+  content: string = ''
+  comments: any
+  users: any[] = []
+  userId: any
+  customers: any
 
   constructor(private productService: ProductService
     , private route: ActivatedRoute
@@ -30,7 +38,10 @@ export class ProductDetailComponent implements OnInit {
     , private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) { }
   ngOnInit(): void {
+
     this.route.params.subscribe((params: Params) => {
+      
+
       this.productID = Number(this.route.snapshot.paramMap.get('id'));
       // this.category = "this.productService.getCategoryByIDProd(this.productID)";
 
@@ -42,9 +53,37 @@ export class ProductDetailComponent implements OnInit {
         this.onIsOutOfStock();
 
       })
-
+      
+      this.productService.getCommentByProductId(this.productID).subscribe((prod: any) =>{
+        this.comments = prod
+        this.comments.forEach((comment: { userId: number; }) => {
+          this.authen.getCustomerIdAPI(comment.userId).subscribe((user: any) => {
+            this.users.push(user);
+          });
+        });
+        this.userId = this.comments.userId
+        console.log(this.userId)
+      })
+      
+      // this.productService.getCommentByUserId(this.userId).subscribe((user:any)=>{
+      //   this.users = user
+      //   this.clientName = user.userName;
+      // })
+     
+     
+      // this.loadUserName()
+      
     })
   }
+  // loadUserId(id:any){
+  //   // this.userId = this.authen.getCurrentUser
+  //   this.authen.getCustomerIdAPI(this.userId).subscribe((customer:any) => {
+  //     this.userId = this.authen.getCurrentUser();
+
+  //     this.customers = customer
+  //     console.log(this.customers.userName)
+  //   })
+  // }
   onListItemClick(itemValue: string): void {
     this.selectedItem = itemValue;
     console.log('Đã chọn:', this.selectedItem);
@@ -132,6 +171,20 @@ export class ProductDetailComponent implements OnInit {
       alert("Vui lòng đăng nhập")
       this.router.navigate(['login'])
     }
+  }
+  onSubmit(f: NgForm) {
+    if(this.authen.customerLoginState){
+      const data = {
+        userId: this.authen.getCurrentUser(),
+        productId: this.productID,
+        content: f.value.content
+      }
+      this.productService.postCommentAPI(data).subscribe()
+    }else{
+      console.log(this.authen.getCurrentUser)
+      console.log("cút vào đăng nhập")
+    }
+    console.log(f);
   }
 
 

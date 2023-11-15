@@ -31,10 +31,11 @@ export class ProductService {
   //     }
   //   }
   // }
+ 
+
   updateProduct(product: any): Observable<any> {
     return this.http.put<any>('https://localhost:7069/api/Products/' + product.productId.toString(), product);
   }
-
 
   setSelectedCategory(categoryId: number) {
     this.selectedCategory = categoryId;
@@ -64,6 +65,19 @@ export class ProductService {
   getProductByCate(id: number): Observable<[]> {
     return this.http.get<[]>('https://localhost:7069/api/Categories/category/' + id.toString());
   }
+  reduceAmount(id: number, size: string, quantity: number) {
+    return this.http.put(`https://localhost:7069/api/Products/api/products/${id}/reduceQuantity?size=${size}&amountToReduce=${quantity}`,null);
+  }
+  increaseAmount(id: number, size: string, quantity: number) {
+    return this.http.put(`https://localhost:7069/api/Products/api/products/${id}/increaseQuantity?size=${size}&amountToIncrease=${quantity}`,null);
+  }
+  sortProducts(sortOrder: string) {
+    return this.http.get<any>('https://localhost:7069/api/Products/sort?sortOrder=' + sortOrder) ;
+  }
+  filter_input(minPrice: number, maxPrice: number){
+    return this.http.get('https://localhost:7069/api/Products/filter_input?minPrice=' + minPrice + '&maxPrice=' + maxPrice)
+  }
+
 
 
 
@@ -90,9 +104,26 @@ export class ProductService {
   getProdBySearchKeyAPI(searchKey: string): Observable<Products[]> {
     return this.http.get<Products[]>('https://localhost:7069/api/Products/searchKey=' + searchKey);
   }
+  getProdAdminBySearchKeyAPI(searchKey: string): Observable<Products[]> {
+    return this.http.get<Products[]>('https://localhost:7069/api/Products/searchKeyAdmin=' + searchKey);
+  }
 
   getFavoriteProductAPI(idCus: number): any {
     return this.http.get('https://localhost:7069/api/Products/idFavor=' + idCus.toString);
+  }
+
+
+  getCommentListAPI(): Observable<any> {
+    return this.http.get<any>('https://localhost:7069/api/Comments');
+  }
+  getCommentByProductId(id: number): any{
+    return this.http.get<any>('https://localhost:7069/api/Comments/productId/' + id.toString());
+  }
+  getCommentByUserId(id: number): any{
+    return this.http.get<any>('https://localhost:7069/api/Comments/userId/' + id.toString());
+  }  
+  postCommentAPI(dataProd: any) {
+    return this.http.post('https://localhost:7069/api/Comments', dataProd)
   }
 
 }

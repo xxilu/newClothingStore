@@ -11,6 +11,8 @@ import { CartItem } from '../model/cart-item.model';
 export class ShoppingCartService {
   cartItem: CartItem[] = [];
   cartQuantityChanged: EventEmitter<number> = new EventEmitter<number>();
+  cartPriceChanged: EventEmitter<number> = new EventEmitter<number>();
+                                                                             
   selectedProduct: any
   private apiUrl = 'https://localhost:7069/api/OrderDetails';
   private cartItemCount = new BehaviorSubject<number>(0);
@@ -28,16 +30,16 @@ export class ShoppingCartService {
     return this.cartItem;
   }
 
-  PlusQuantity(prodID: number) {
-    const cartItem = this.cartItem.find(item => item.productID == prodID);
+  PlusQuantity(prodID: number, size: string) {
+    const cartItem = this.cartItem.find(item => item.productID == prodID && item.productSize == size);
     if (cartItem) {
       cartItem.quantity++;
       this.cartQuantityChanged.emit(this.getQuantity());
     }
   }
 
-  MinusQuantity(prodID: number) {
-    const cartItem = this.cartItem.find(item => item.productID == prodID);
+  MinusQuantity(prodID: number, size: string) {
+    const cartItem = this.cartItem.find(item => item.productID == prodID && item.productSize == size);
     if (cartItem) {
       cartItem.quantity--;
       if (cartItem.quantity < 1) {
@@ -53,6 +55,7 @@ export class ShoppingCartService {
     this.cartItem.forEach(element => {
       finalPrice += element.FinalPrice();
     });
+    // this.cartPriceChanged.emit(finalPrice)
     return finalPrice;
   }
 
@@ -98,25 +101,42 @@ export class ShoppingCartService {
   //     // Gọi API hoặc cách nào đó để cập nhật số lượng sản phẩm trong cơ sở dữ liệu
   //   }
   // }
-  PayMent(order: any): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json', // Đặt Content-Type là JSON
-      }),
-    };
-    return this.http.post<any>('https://localhost:7069/api/OrderDetails', order);
-
+  PayMent(prod: any, quantity: number, size: string) {
+    const product = this.cartItem.find(
+      item => item.productID == prod.productId && item.productSize == size);
+    if (product == null) {
+      if (size == prod.size1 && quantity > prod.amount1) {
+        alert("vượt giói hạn")
+      }
+      this.cartItem.push(new CartItem(prod, quantity, size));
+    } else {
+      product.quantity += quantity;
+    }
+    this.cartQuantityChanged.emit(this.getQuantity());
+    
   }
+  // PayMent(order: any): Observable<any> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json', // Đặt Content-Type là JSON
+  //     }),
+  //   };
+  //   return this.http.post<any>('https://localhost:7069/api/OrderDetails', order);
+
+  // }
 
 
-  DeleteProdCart(prodID: number) {
+  DeleteProdCart(productId: number, size: string) {
     // var prod = this.cartItem.find((item) => item.productID == prodID);       
-    this.cartItem = this.cartItem.filter(item => item.productID != prodID);
+    this.cartItem = this.cartItem.filter(item => !(item.productID === productId && item.productSize === size));
+    this.cartPriceChanged.emit(this.getPrice())
     this.cartQuantityChanged.emit(this.getQuantity());
   }
 
   ClearCart() {
     this.cartItem = [];
+    this.cartPriceChanged.emit(this.getPrice())
+
     this.cartQuantityChanged.emit(this.getQuantity());
   }
 

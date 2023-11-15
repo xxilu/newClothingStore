@@ -23,7 +23,9 @@ export class AuthenticationService implements OnInit{
   getCustomerListAPI(): Observable<any> {
     return this.http.get<any>('https://localhost:7069/api/Customers');
   }
-
+  getCustomerIdAPI(id: number): any {
+    return this.http.get<any>('https://localhost:7069/api/Customers/' + id.toString());
+  }
   LogOut() {
     this.adminLoginState = false
     this.customerLoginState = false

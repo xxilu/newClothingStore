@@ -1,19 +1,24 @@
+
+
+
 <div class="row">
     <div class="block-filter">
         <div class="filter-content">
             <label class="btn">Mức giá</label>
-            <!-- <button type="button" [routerLink]="['/product-list']"   (click)=" FillProdUnder4Million()" class="btn">Dưới 4 triệu</button> -->
-            <!-- <button type="button" (click)=" FillProdFrom4To8Million()" class="btn">Từ 4 triệu đến 8 triệu</button>
-            <button type="button" (click)="FillProdFrom8To11Million()" class="btn">Từ 8 triệu đến 11 triệu</button>
-            <button type="button" (click)="FillProdOver12Million()" class="btn">Trên 12 triệu</button> -->
+           
         </div>
-
-        <div class="filter-content">
+        <button (click)="sortProducts('price_asc')">Sắp xếp theo giá tăng dần</button>
+        <button (click)="sortProducts('price_desc')">Sắp xếp theo giá giảm dần</button>
+        <button (click)="filterProduct(100000,300000)">Lọc 100000 - 300000</button>
+        <button (click)="filterProduct(300000,500000)">Lọc 300000 - 500000</button>
+        <button (click)="filterProduct(500000,700000)">Lọc 500000 - 700000</button>
+        <button (click)="filterProduct(700000,900000)">Lọc 700000 - 900000</button>
+        <!-- <div class="filter-content">
             <label class="btn"> Sắp xếp theo</label>
             <button type="button" (click)="SortIncreaseByPrice()" class="btn"><i class="bi bi-sort-down-alt"></i> Giá thấp - cao</button>
             <button type="button" (click)="SortDecreaseByPrice()" class="btn"><i class="bi bi-sort-up"></i> Giá cao - thấp</button>
 
-        </div>
+        </div> -->
     </div>
 </div>
 <div class="row" >

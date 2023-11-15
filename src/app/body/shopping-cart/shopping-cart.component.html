@@ -28,7 +28,7 @@
                                                 </h6>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                                <button class="btn btn-link px-2"
+                                                <!-- <button class="btn btn-link px-2"
                                                     onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
@@ -40,7 +40,13 @@
                                                 <button class="btn btn-link px-2"
                                                     onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                                     <i class="fas fa-plus"></i>
-                                                </button>
+                                                </button> -->
+                                                <div class="quantity" id="handleCounter" >
+                                                    <span style="margin-right: 20px;">Số lượng</span>
+                                                    <button  type="button" class="btn quantity-btn" id="counter-minus" (click)="DeCreaseQuantity(item.productID, item.productSize)">-</button>
+                                                    <input type="number" [value]="item.quantity" data-numspin id="quantity_product" min="1" disabled="disabled">
+                                                    <button   type="button" class="btn quantity-btn" id="counter-plus" (click)="InCreaseQuantity(item.productID, item.productSize)">+</button>
+                                                </div>
                                             </div>
                                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                 <h6 class="mb-0">{{item.officialPrice}} VNĐ</h6>
@@ -49,7 +55,7 @@
                                                 <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
                                             </div>
                                             <div class="col-lg-1 delete-item-cart-btn">
-                                                <button (click)="DeleteProduct(item.productID)"><i
+                                                <button (click)="DeleteProduct(item.productID, item.productSize)"><i
                                                         class="bi bi-trash"></i>Xóa</button>
                                             </div>
                                         </div>

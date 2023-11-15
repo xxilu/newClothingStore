@@ -25,6 +25,12 @@ export class ReportComponent implements OnInit{
   orderDetailList: any[] = [];
   orderDetailListLength: number = 0;
 
+  productStatistics: any[] = [];
+
+  orders: any
+  startDate: string = '';
+  endDate: string = '';
+
 
 
 
@@ -49,6 +55,10 @@ export class ReportComponent implements OnInit{
       this.orderProduct = this.calculateTotalProduct(total);
 
     });
+    // this.orderService.getProductStatistics().subscribe((data) => {
+    //   this.productStatistics = data;
+    //   console.log('cc', this.productStatistics)
+    // });
    
 
   }
@@ -68,6 +78,18 @@ export class ReportComponent implements OnInit{
       total += order.orderPrice; 
     }
     return total;
+  }
+  // fetchData(): void {
+  //   this.orderService.getProductStatistics().subscribe((data) => {
+  //     this.productStatistics = data;
+  //     console.log('cc')
+  //   });
+  // }
+  getSalesDate() {
+    this.orderService.getSalesDate(this.startDate, this.endDate).subscribe((data: any) => {
+      this.productStatistics  = data;
+      console.log('cc', data)
+    });
   }
 
 

@@ -17,6 +17,8 @@ export class ProductCardComponent implements OnInit {
   // categoryId: any
   cateState: any
   addtocart: any
+  minPrice: any
+  maxPrice: any
 
 
   ngOnInit(): void {
@@ -42,6 +44,19 @@ export class ProductCardComponent implements OnInit {
 
     })
   }
+  sortProducts(sortOrder: string){
+    this.productService.sortProducts(sortOrder).subscribe((data:any) => {
+      this.products = data;
+    })
+    this.router.navigate(['/product-list']);
+  }
+  filterProduct(minPrice: number, maxPrice: number){
+    this.productService.filter_input(minPrice, maxPrice).subscribe((data:any) => {
+      this.products = data;
+    })
+    this.router.navigate(['/product-list']);
+  }
+
   loadList() {
  
       this.productService.getProductListAPI().subscribe((list) => {
@@ -51,20 +66,17 @@ export class ProductCardComponent implements OnInit {
 
   }
 
-  SortIncreaseByPrice() {
-    this.router.navigate(['/product-list']);
-    this.products.sort((a: { officialPrice: number; }, b: { officialPrice: number; }) => a.officialPrice - b.officialPrice)
-    // this.products = [...this.products]; 
-    // this.sorted = true;
+  // SortIncreaseByPrice() {
+  //   this.router.navigate(['/product-list']);
+  //   this.products.sort((a: { officialPrice: number; }, b: { officialPrice: number; }) => a.officialPrice - b.officialPrice)
+  //   // this.products = [...this.products]; 
+  //   // this.sorted = true;
 
-  }
-  SortDecreaseByPrice() {
-    this.router.navigate(['/product-list']);  
-    this.products.sort((a: { officialPrice: number; }, b: { officialPrice: number; }) => b.officialPrice - a.officialPrice)
-    // this.products = [...this.products]; 
-    // this.sorted = true;
-
-
-
-  }
+  // }
+  // SortDecreaseByPrice() {
+  //   this.router.navigate(['/product-list']);  
+  //   this.products.sort((a: { officialPrice: number; }, b: { officialPrice: number; }) => b.officialPrice - a.officialPrice)
+  //   // this.products = [...this.products]; 
+  //   // this.sorted = true;
+  // }
 }
